@@ -4,10 +4,10 @@ metadata:
   name: frontend
   namespace: chat-app
 spec:
-  type: NodePort  # CHANGE THIS from ClusterIP to NodePort
+  type: NodePort         # ← CHANGE THIS (ClusterIP → NodePort)
   selector:
     app: frontend
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 30080   # OPTIONAL – fixed port
+      nodePort: 30080    # ← OPTIONAL FIXED PORT (you can change)
