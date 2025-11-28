@@ -1,9 +1,3 @@
-
----
-
-## 🔧 **deploy.sh (Shell Script)**
-
-```bash
 #!/bin/bash
 
 echo "🚀 Starting Deployment..."
