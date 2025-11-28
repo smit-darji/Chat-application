@@ -2,7 +2,7 @@ name: Build & Push Docker Images & Update YAML
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "Master" ]
 
 jobs:
   build_and_push:
@@ -41,5 +41,5 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: "Update image tags to ${{ env.COMMIT_HASH }}"
-        branch: main
+        branch: Master
         push: true
