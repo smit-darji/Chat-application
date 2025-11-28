@@ -1,0 +1,34 @@
+server:
+  http_listen_port: 3101
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+
+scrape_configs:
+  # SCRAPE POD LOGS
+  - job_name: kubernetes-pods
+    kubernetes_sd_configs:
+      - role: pod
+
+    relabel_configs:
+      # Only scrape these apps:
+      - source_labels: [__meta_kubernetes_pod_label_app]
+        action: keep
+        regex: backend|frontend|mongodb
+
+      # Attach useful labels
+      - source_labels: [__meta_kubernetes_pod_name]
+        target_label: pod
+
+      - source_labels: [__meta_kubernetes_namespace]
+        target_label: namespace
+
+      - source_labels: [__meta_kubernetes_pod_node_name]
+        target_label: node
+
+      - source_labels: [__meta_kubernetes_pod_container_name]
+        target_label: container
