@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: chatapp-frontend
-        image: smitdarji/k8s-chat-app-frontend:ce06f50
+        image: smitdarji/k8s-chat-app-frontend:6035985
         ports:
         - containerPort: 80
         env:
