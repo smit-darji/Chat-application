@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: chat-appset
+  namespace: argocd
+
+spec:
+  generators:
+    - list:
+        elements:
+          - name: frontend
+            include: frontend-*.yml
+          - name: backend
+            include: backend-*.yml
+          - name: mongo
+            include: mongodb-*.yml
+          - name: ingress
+            include: ingress.yml
+
+  template:
+    metadata:
+      name: 'chat-{{name}}'
+    spec:
+      project: chat-project
+      source:
+        repoURL: https://github.com/smit-darji/Chat-application.git
+        targetRevision: Master
+        path: .
+        directory:
+          recurse: true
+          include: '{{include}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: chat-app
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

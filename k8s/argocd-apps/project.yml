@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: chat-project
+  namespace: argocd
+spec:
+  sourceRepos:
+    - https://github.com/smit-darji/Chat-application.git
+  destinations:
+    - namespace: chat-app
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

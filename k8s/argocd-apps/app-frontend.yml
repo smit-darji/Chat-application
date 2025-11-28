@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: chat-application
+  namespace: argocd
+spec:
+  project: chat-project
+
+  source:
+    repoURL: https://github.com/smit-darji/Chat-application.git
+    targetRevision: Master
+    path: k8s           # 🔥 IMPORTANT → all your YAMLs are inside /k8s/
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: chat-app
+
+  syncPolicy:
+    automated:
+      prune: true       # delete removed resources
+      selfHeal: true    # auto fix drift
+    syncOptions:
+      - CreateNamespace=true   # create chat-app namespace if missing
+      - ApplyOutOfSyncOnly=true # only apply changed resources
