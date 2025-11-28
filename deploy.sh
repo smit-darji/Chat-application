@@ -30,8 +30,8 @@ kubectl apply -f backend-service.yml
 
 ### 4. Frontend Deployment
 cd ../frontend
-docker build -t smitdarji/k8s-chat-app-frontend:latest .
-docker push smitdarji/k8s-chat-app-frontend:latest
+docker build -t smitdarji/k8s-chat-app-frontend:v111 .
+docker push smitdarji/k8s-chat-app-frontend:v111
 
 cd ../k8s
 kubectl apply -f frontend-deployment.yml
