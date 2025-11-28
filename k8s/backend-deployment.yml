@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: chatapp-backend
-        image: smitdarji/k8s-chat-app-backend:d120595
+        image: smitdarji/k8s-chat-app-backend:d079384
         ports:
         - containerPort: 5001
         env:
