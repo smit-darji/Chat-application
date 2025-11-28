@@ -1,0 +1,45 @@
+name: Build & Push Docker Images & Update YAML
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Get Commit SHA
+      id: vars
+      run: echo "COMMIT_HASH=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - name: Build & Push Backend Image
+      run: |
+        docker build -t smitdarji/k8s-chat-app-backend:${{ env.COMMIT_HASH }} ./backend
+        docker push smitdarji/k8s-chat-app-backend:${{ env.COMMIT_HASH }}
+
+    - name: Build & Push Frontend Image
+      run: |
+        docker build -t smitdarji/k8s-chat-app-frontend:${{ env.COMMIT_HASH }} ./frontend
+        docker push smitdarji/k8s-chat-app-frontend:${{ env.COMMIT_HASH }}
+
+    - name: Update Kubernetes YAMLs
+      run: |
+        sed -i "s|smitdarji/k8s-chat-app-backend:.*|smitdarji/k8s-chat-app-backend:${{ env.COMMIT_HASH }}|g" k8s/backend-deployment.yml
+        sed -i "s|smitdarji/k8s-chat-app-frontend:.*|smitdarji/k8s-chat-app-frontend:${{ env.COMMIT_HASH }}|g" k8s/frontend-deployment.yml
+
+    - name: Commit & Push Updated YAML files
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "Update image tags to ${{ env.COMMIT_HASH }}"
+        branch: main
+        push: true

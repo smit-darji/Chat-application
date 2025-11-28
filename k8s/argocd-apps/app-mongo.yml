@@ -6,7 +6,7 @@ metadata:
 spec:
   project: chat-project
   source:
-    repoURL: https://github.com/smit-darji/Chat-application.git
+    repoURL: https://github.com/selfHeal-darji/Chat-application.git
     targetRevision: Master
     path: k8s
     directory:
