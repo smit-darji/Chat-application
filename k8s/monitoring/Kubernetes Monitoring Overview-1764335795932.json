@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 0,
+  "id": 1,
   "links": [],
   "panels": [
     {
@@ -2623,7 +2623,7 @@
     }
   ],
   "preload": false,
-  "refresh": "10s",
+  "refresh": "2m",
   "schemaVersion": 42,
   "tags": [
     "kubernetes",
@@ -2683,12 +2683,8 @@
       },
       {
         "current": {
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": "$cluster",
         "definition": "label_values(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\"},container)",
@@ -2707,7 +2703,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {
